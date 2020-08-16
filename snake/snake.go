@@ -13,10 +13,10 @@ type Direction uint8
 const (
 	Left = iota
 	Top
-	Right
-	Bottom
+	Up
+	Down
 )
-
+type State uint8
 const (
 	Idle =iota
 	Running
@@ -32,7 +32,7 @@ type Snake struct{
 
 	width     int
 	height    int
-	state     int
+	state     State
 	direction Direction
 	lock      sync.Mutex
 	profit    map[[2]int]int
@@ -44,7 +44,7 @@ func NewSnake(size int,width int,height int)*Snake{
 	s:=Snake{
 		width:     width,
 		height:    height,
-		direction: Right,
+		direction: Up,
 		initSize:  size,
 		state:     Idle,
 	}
@@ -107,7 +107,7 @@ func (s *Snake)step(){
 	}
 	end:=s.body[len(s.body)-1]
 	if s.profit[end]>0{
-		s.grows=s.profit[end]
+		s.grows+=s.profit[end]
 		delete(s.profit,end)
 	}
 	if len(s.profit)<4{
@@ -124,9 +124,9 @@ func (s *Snake) newEnd()[2]int{
 	switch s.direction{
 	case Top:
 		offsetY=1
-	case Right:
+	case Up:
 		offsetX=1
-	case Bottom:
+	case Down:
 		offsetY=-1
 	case Left:
 		offsetX=-1
@@ -189,16 +189,16 @@ func (s *Snake)SetDirection(dir Direction){
 	if s.state!=Running{
 		return
 	}
-	if s.direction==Left && dir==Right{
+	if s.direction==Left && dir== Up {
 		return
 	}
-	if s.direction==Right && dir==Left{
+	if s.direction== Up && dir==Left{
 		return
 	}
-	if s.direction==Top && dir==Bottom{
+	if s.direction==Top && dir== Down {
 		return
 	}
-	if s.direction==Bottom && dir==Top{
+	if s.direction== Down && dir==Top{
 		return
 	}
 	s.direction=dir
@@ -210,7 +210,7 @@ func (s *Snake) Reset() {
 	s.reset()
 }
 func (s *Snake)reset(){
-	s.direction=Right
+	s.direction= Up
 	s.body=nil
 	for i:=0;i<s.initSize;i++{
 		s.body=append(s.body,[2]int{i,0})
@@ -228,7 +228,7 @@ func (s *Snake)randProfit(n int){
 }
 
 
-func (s *Snake) State() int {
+func (s *Snake) State() State {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 	return s.state

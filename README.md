@@ -6,10 +6,17 @@
 所需要的无非是一个图形框架，能够绘制图像，响应点击事件。
 
 这里我们采用的是[pixel](github.com/faiface/pixel)一个由go写的2D游戏框架。
-## 安装
+## 安装使用
+
+    On macOS, you need Xcode or Command Line Tools for Xcode (xcode-select --install) for required headers and libraries.
+    On Ubuntu/Debian-like Linux distributions, you need libgl1-mesa-dev and xorg-dev packages.
+    On CentOS/Fedora-like Linux distributions, you need libX11-devel libXcursor-devel libXrandr-devel libXinerama-devel mesa-libGL-devel libXi-devel packages.
+    See here for full details.
+
 pixel 依赖于opengl 安装参考[pixel requirements](https://github.com/faiface/pixel#requirement)
 
 图形库使用参考[pixel](https://github.com/faiface/pixel)
+
 
 ![snake.png](snake.png)
 ## 基本原理
@@ -113,4 +120,10 @@ func (s *Snake) newEnd()[2]int{
 	return [2]int{x,y}
 }
 ```
+
+
+### 控制
+* 方向： 方向键
+* 暂停/启动： 空格
+* 重启： 回车
 

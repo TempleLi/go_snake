@@ -40,10 +40,10 @@ func run() {
 			s.SetDirection(snake.Left)
 		}
 		if win.JustPressed(pixelgl.KeyRight) {
-			s.SetDirection(snake.Right)
+			s.SetDirection(snake.Up)
 		}
 		if win.JustPressed(pixelgl.KeyDown) {
-			s.SetDirection(snake.Bottom)
+			s.SetDirection(snake.Down)
 		}
 		if win.JustPressed(pixelgl.KeyUp) {
 			s.SetDirection(snake.Top)
